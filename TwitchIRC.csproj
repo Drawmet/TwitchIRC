@@ -50,6 +50,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Net\IsGd.cs" />
+    <Compile Include="Net\BitLy.cs" />
+    <Compile Include="Net\BoxClient.cs" />
+    <Compile Include="Net\BoxFile.cs" />
+    <Compile Include="Net\Client.cs" />
+    <Compile Include="Net\FileVersion.cs" />
     <Compile Include="Net\Letter.cs" />
     <Compile Include="Net\Program.cs" />
     <Compile Include="Core\IRC.cs" />
@@ -63,6 +69,10 @@
     <Compile Include="Net\RCookie.cs" />
     <Compile Include="Net\TempMail.cs" />
     <Compile Include="Net\TempMailGu.cs" />
+    <Compile Include="Net\Tinycc.cs" />
+    <Compile Include="Net\TnyIm.cs" />
+    <Compile Include="Net\TwitchClient.cs" />
+    <Compile Include="Net\TokenResponse.cs" />
     <Compile Include="Utils\JsonHelper.cs" />
     <Compile Include="Utils\Channel.cs" />
     <Compile Include="Utils\Stream.cs" />

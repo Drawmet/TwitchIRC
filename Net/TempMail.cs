@@ -38,8 +38,8 @@ namespace TwitchIRC
             return minValue + Next() % range;
         }
 
-        int MinStringLength = 6;
-        int MaxStringLength = 10;
+        int MinStringLength = 8;
+        int MaxStringLength = 13;
         public string NextString()
         {
             StringBuilder sb = new StringBuilder();

@@ -128,8 +128,44 @@ namespace TwitchIRC.Net
         return str;
       }
     }
+        public string SendPostRequest(string url, string req, string referer, string headers, bool local = false)
+        {
+            try
+            {
+                byte[] bytes = Encoding.UTF8.GetBytes(req);
+                HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
+                httpWebRequest.CookieContainer = this.Cookies.CookiesContainer ?? new CookieContainer();
+                httpWebRequest.UserAgent = this.UserAgent;
+                httpWebRequest.ContentType = "application/x-www-form-urlencoded";
+                httpWebRequest.Method = "POST";
+                if (referer != "")
+                    httpWebRequest.Referer = referer;
+                httpWebRequest.Headers.Add("Authorization", headers);
+                httpWebRequest.ContentLength = (long)bytes.Length;
+                httpWebRequest.GetRequestStream().Write(bytes, 0, bytes.Length);
+                HttpWebResponse httpWebResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                StreamReader streamReader = new StreamReader(httpWebRequest.GetResponse().GetResponseStream());
+                string str = new StreamReader(httpWebRequest.GetResponse().GetResponseStream()).ReadToEnd();
+                foreach (Cookie cookie in httpWebResponse.Cookies)
+                    this.Cookies.Set(cookie);
+                if (local)
+                    str = httpWebResponse.ResponseUri.ToString();
+                httpWebResponse.Close();
+                streamReader.Close();
+                return str;
+            }
+            catch (WebException ex)
+            {
+                string str = string.Empty;
+                if (ex.Status != WebExceptionStatus.ProtocolError)
+                    return str;
+                using (StreamReader streamReader = new StreamReader(ex.Response.GetResponseStream()))
+                    str = streamReader.ReadToEnd();
+                return str;
+            }
+        }
 
-    public async Task<string> GetRequestAsync(string url)
+        public async Task<string> GetRequestAsync(string url)
     {
       string str;
       try
